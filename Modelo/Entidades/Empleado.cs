@@ -8,6 +8,7 @@ namespace Modelo.Entidades
 {
     public class Empleado
     {
+        public int EmpleadoId { get; set; }
         public string Nombres { get; set; }
         public string Apellidos { get; set; }
         public int Cedula { get; set; }
@@ -15,21 +16,27 @@ namespace Modelo.Entidades
         public int Telefono { get; set; }
         public string Email { get; set; }
 
-        public Departamento Departamento { get; set; }
+        public Departamento Departamentos { get; set; }
         public int DepartamendoId { get; set; }
-        public Sucursal Sucursal { get; set; }
+        public Sucursal Sucursales { get; set; }
         public int SucursalId { get; set; }
-        public Cargo Cargo { get; set; }
-        public int CargoId { get; set; }
-        public Facturas Facturas { get; set; }
-        public int FacturaId { get; set; }
-        public Permisos Permisos { get; set; }
-        public int PermisoId { get; set; }
-        public Control_Asistencia Asistencia { get; set; }
+        public Control_Asistencia Asistencias { get; set; }
         public int AsistenciaId { get; set; }
-        public Desempeno Desempeno { get; set; }
+
+        /*
+        public Cargo Cargos { get; set; }
+        public int CargoId { get; set; }
+        public Factura Facturas { get; set; }
+        public int FacturaId { get; set; }
+        public Permiso Permisos { get; set; }
+        public int PermisoId { get; set; }
+        
+        public Desempeno DesempenosA { get; set; }
         public int DesempenoId { get; set; }
-        public Sueldo Sueldo { get; set; }
+        public Bono Bonos { get; set; }
+        public int BonoId { get; set; }        
+        public Sueldo Sueldos { get; set; }
         public int SueldoId { get; set; }
+        */
     }
 }

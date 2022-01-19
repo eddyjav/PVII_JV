@@ -6,10 +6,10 @@ using System.Threading.Tasks;
 
 namespace Modelo.Entidades
 {
-    public class Permisos
+    public class DesempenoSc
     {
-        public int PermisoId { get; set; }
+        public int DesempenoScId { get; set; }
         public string Nombre { get; set; }
-        public string Tipo { get; set; }
+        public string Calificacion { get; set; }
     }
 }

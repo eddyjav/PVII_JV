@@ -8,7 +8,7 @@ namespace Modelo.Entidades
 {
     public class Horario_Det
     {
-        public int DetalleId { get; set; }
+        public int Horario_DetId { get; set; }
         public DateTime Anio { get; set; }
         public DateTime Mes { get; set; }
         public DateTime Dia { get; set; }

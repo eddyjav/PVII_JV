@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Modelo.Entidades
 {
-    public class Bonos
+    public class Bono
     {
         public int BonoID { get; set; }
         public string Nombre { get; set; }
@@ -14,7 +14,11 @@ namespace Modelo.Entidades
         public float Valor { get; set; }
 
 
-        public Facturas Factura { get; set; }
+        /*public ICollection<Sueldo> LSueldo{ get; set; }
+        */
+        /*
+        public Factura Factura { get; set; }
         public int FacturaId { get; set; }
+        */
     }
 }

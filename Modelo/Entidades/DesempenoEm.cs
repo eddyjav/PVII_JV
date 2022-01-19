@@ -6,9 +6,9 @@ using System.Threading.Tasks;
 
 namespace Modelo.Entidades
 {
-    public class Desempeno
+    public class DesempenoEm
     {
-        public int DesempenoId { get; set; }
+        public int DesempenoEmId { get; set; }
         public string Nombre { get; set; }
         public string Calificacion { get; set; }
     }

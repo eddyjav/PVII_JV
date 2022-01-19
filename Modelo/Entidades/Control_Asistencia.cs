@@ -8,7 +8,7 @@ namespace Modelo.Entidades
 {
     public class Control_Asistencia
     {
-        public int ControlId { get; set; }
+        public int Control_AsistenciaId { get; set; }
         public DateTime Ingreso { get; set; }
         public DateTime SalidaAlmuerzo { get; set; }
         public DateTime EntradaAlmuerzo { get; set; }
@@ -17,5 +17,7 @@ namespace Modelo.Entidades
 
         public Horario_Det Horario_Detalle{ get; set; }
         public int DetalleId { get; set; }
+        public Permiso Permisos { get; set; }
+        public int PermisoId { get; set; }
     }
 }
