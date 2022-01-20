@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -15,9 +16,10 @@ namespace Modelo.Entidades
         public DateTime Salida { get; set; }
         public string Permiso { get; set; }
 
-        public Horario_Det Horario_Detalle{ get; set; }
-        public int DetalleId { get; set; }
-        public Permiso Permisos { get; set; }
-        public int PermisoId { get; set; }
+        public Horario_Det Horario_Det{ get; set; }
+       
+        public ICollection<Permiso> Permisos  { get; set; }
+
+        public ICollection<Empleado> Empleados { get; set; }
     }
 }

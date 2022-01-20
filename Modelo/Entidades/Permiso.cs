@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -11,5 +12,7 @@ namespace Modelo.Entidades
         public int PermisoId { get; set; }
         public string Nombre { get; set; }
         public string Tipo { get; set; }
+        public Control_Asistencia Control_Asistencia { get; set; }
+        public int Control_AsistenciaId { get; set; }
     }
 }

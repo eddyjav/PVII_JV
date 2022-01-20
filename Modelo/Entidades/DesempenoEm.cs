@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -11,5 +12,6 @@ namespace Modelo.Entidades
         public int DesempenoEmId { get; set; }
         public string Nombre { get; set; }
         public string Calificacion { get; set; }
+        public ICollection<Empleado> Empleados { get; set; }
     }
 }

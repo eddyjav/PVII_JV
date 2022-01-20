@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -10,5 +11,9 @@ namespace Modelo.Entidades
     {
         public int CargoId { get; set; }
         public float Salario { get; set; }
+        public Sueldo Sueldo { get; set; }
+        public int SueldoId { get; set; }
+
+        //public ICollection<Sueldo> Sueldos { get; set; }
     }
 }

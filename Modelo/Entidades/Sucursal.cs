@@ -11,7 +11,11 @@ namespace Modelo.Entidades
         public int SucursalId { get; set; }
         public string Nombre { get; set; }
         public string Direccion { get; set; }
-        public ICollection<Empleado> ListaEmSuc { get; set; }
+
+        public Empleado Empleado { get; set; }
+        public int EmpleadoId { get; set; }
+
+        //public ICollection<Empleado> ListaEmSuc { get; set; }
 
         /*
         public DesempenoSc DesempenosB { get; set; }

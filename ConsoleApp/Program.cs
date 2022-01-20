@@ -29,6 +29,7 @@ namespace ConsoleApp
                 Direccion = "Av. Galo Plaza"
             };
 
+            /*
             //creacion de empleado
             Empleado Juan = new Empleado() { 
                 Nombres="Juan", 
@@ -52,6 +53,8 @@ namespace ConsoleApp
                 Departamentos= Ventas,
                 Sucursales= Sucursal2
             };
+            */
+
 
             //Ventas.ListaEmDep = new List<Empleado>() { Juan, Andres};
 
@@ -60,8 +63,8 @@ namespace ConsoleApp
             db.Departamentos.Add(Ventas);
             db.Sucursals.Add(Sucursal1);
             db.Sucursals.Add(Sucursal2);
-            db.Empleados.Add(Juan);
-            db.Empleados.Add(Andres);
+            //db.Empleados.Add(Juan);
+            //db.Empleados.Add(Andres);
             db.SaveChanges();
         }
     }

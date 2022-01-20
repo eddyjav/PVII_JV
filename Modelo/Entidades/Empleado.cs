@@ -16,12 +16,20 @@ namespace Modelo.Entidades
         public int Telefono { get; set; }
         public string Email { get; set; }
 
-        public Departamento Departamentos { get; set; }
+        public Departamento Departamento { get; set; }
         public int DepartamendoId { get; set; }
-        public Sucursal Sucursales { get; set; }
-        public int SucursalId { get; set; }
-        public Control_Asistencia Asistencias { get; set; }
-        public int AsistenciaId { get; set; }
+        public Sucursal Sucursal { get; set; }
+        //public int SucursalId { get; set; }
+        public Control_Asistencia Control_Asistencia { get; set; }
+        public int Control_AsistenciaId { get; set; }
+
+        public Sueldo Sueldo { get; set; }
+        public int SueldoId { get; set; }
+
+        public DesempenoEm DesempenoEm { get; set; }
+        public int DesempenoEmId { get; set; }
+        public DesempenoSc DesempenoSc { get; set; }
+        public int DesempenoScId { get; set; }
 
         /*
         public Cargo Cargos { get; set; }

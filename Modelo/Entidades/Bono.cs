@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -13,7 +14,10 @@ namespace Modelo.Entidades
         public string Tipo { get; set; }
         public float Valor { get; set; }
 
+        public Sueldo Sueldo { get; set; }
+        public int SueldoId { get; set; }
 
+        // public ICollection<Factura> Facturas { get; set; }
         /*public ICollection<Sueldo> LSueldo{ get; set; }
         */
         /*
