@@ -23,9 +23,11 @@ namespace ModeloBD
         public DbSet<Sucursal> Sucursals { get; set; }
         public DbSet<Sueldo> Sueldos { get; set; }
 
+        public DbSet<Aumento> Aumentos { get; set; }
+
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            optionsBuilder.UseSqlServer("Server=DESKTOP-V7VPQBI;Initial Catalog=SisEvalV3;Trusted_Connection=True");
+            optionsBuilder.UseSqlServer("Server=DESKTOP-V7VPQBI;Initial Catalog=SisEvalV4;Trusted_Connection=True");
         }
         
         protected override void OnModelCreating(ModelBuilder model)
@@ -67,12 +69,7 @@ namespace ModeloBD
             model.Entity<Factura>()
                 .HasOne(f => f.Sueldo)
                 .WithMany(s => s.Facturas)
-                .HasForeignKey(f => f.SueldoId);
-            //Bono
-            model.Entity<Bono>()
-                .HasOne(b => b.Sueldo)
-                .WithMany(s => s.Bonos)
-                .HasForeignKey(b => b.SueldoId);      
+                .HasForeignKey(f => f.SueldoId);              
             //Cargo
             model.Entity<Cargo>()
                 .HasOne(c =>c.Sueldo)
@@ -81,15 +78,46 @@ namespace ModeloBD
 
             //Asistencia
             //Detalle ONEbyONE
-            model.Entity<Control_Asistencia>()
+            /*model.Entity<Control_Asistencia>()
                 .HasOne(ca => ca.Horario_Det)
                 .WithOne(hd => hd.Control_Asistencia)
                 .HasForeignKey<Horario_Det>(hd => hd.Control_AsistenciaId);
+            */
+
+
             //Permiso
             model.Entity<Permiso>()
                 .HasOne(p => p.Control_Asistencia)
                 .WithMany(ca => ca.Permisos)
                 .HasForeignKey(p => p.Control_AsistenciaId);
+            
+            //Asistencia
+            //Detalle ONEbyONE V2
+            model.Entity<Permiso>()
+                .HasOne(p => p.Horario_Det)
+                .WithOne(hd => hd.Permiso)
+                .HasForeignKey<Horario_Det>(hd =>hd.PermisoId);
+
+            //Configuracion Aumento
+            model.Entity<Aumento>()
+                .HasKey(Aumento => new
+                {
+                    Aumento.EmpleadoId,
+                    Aumento.BonoId
+                });
+
+            //N:N
+            //Aumento
+            model.Entity<Aumento>()
+                .HasOne(a => a.Empleado)
+                .WithMany(e => e.Aumentos)
+                .OnDelete(DeleteBehavior.NoAction)
+                .HasForeignKey(a => a.EmpleadoId);
+
+            model.Entity<Aumento>()
+                .HasOne(a => a.Bono)
+                .WithMany(b => b.Aumentos)
+                .HasForeignKey(a => a.BonoId);
 
         }
         

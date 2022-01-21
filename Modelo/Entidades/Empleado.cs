@@ -30,6 +30,7 @@ namespace Modelo.Entidades
         public int DesempenoEmId { get; set; }
         public DesempenoSc DesempenoSc { get; set; }
         public int DesempenoScId { get; set; }
+        public ICollection<Aumento> Aumentos { get; set; }
 
         /*
         public Cargo Cargos { get; set; }

@@ -10,8 +10,8 @@ using ModeloBD;
 namespace ModeloBD.Migrations
 {
     [DbContext(typeof(Repositorio))]
-    [Migration("20220119170001_SisEval2")]
-    partial class SisEval2
+    [Migration("20220121162647_SisEval4")]
+    partial class SisEval4
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -21,12 +21,30 @@ namespace ModeloBD.Migrations
                 .HasAnnotation("ProductVersion", "5.0.13")
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
+            modelBuilder.Entity("Modelo.Entidades.Aumento", b =>
+                {
+                    b.Property<int>("EmpleadoId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("BonoId")
+                        .HasColumnType("int");
+
+                    b.HasKey("EmpleadoId", "BonoId");
+
+                    b.HasIndex("BonoId");
+
+                    b.ToTable("Aumentos");
+                });
+
             modelBuilder.Entity("Modelo.Entidades.Bono", b =>
                 {
-                    b.Property<int>("BonoID")
+                    b.Property<int>("BonoId")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<int>("EmpleadoId")
+                        .HasColumnType("int");
 
                     b.Property<string>("Nombre")
                         .HasColumnType("nvarchar(max)");
@@ -37,7 +55,9 @@ namespace ModeloBD.Migrations
                     b.Property<float>("Valor")
                         .HasColumnType("real");
 
-                    b.HasKey("BonoID");
+                    b.HasKey("BonoId");
+
+                    b.HasIndex("EmpleadoId");
 
                     b.ToTable("Bonos");
                 });
@@ -52,7 +72,12 @@ namespace ModeloBD.Migrations
                     b.Property<float>("Salario")
                         .HasColumnType("real");
 
+                    b.Property<int>("SueldoId")
+                        .HasColumnType("int");
+
                     b.HasKey("CargoId");
+
+                    b.HasIndex("SueldoId");
 
                     b.ToTable("Cargos");
                 });
@@ -64,23 +89,11 @@ namespace ModeloBD.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<int>("DetalleId")
-                        .HasColumnType("int");
-
                     b.Property<DateTime>("EntradaAlmuerzo")
                         .HasColumnType("datetime2");
 
-                    b.Property<int?>("Horario_DetalleHorario_DetId")
-                        .HasColumnType("int");
-
                     b.Property<DateTime>("Ingreso")
                         .HasColumnType("datetime2");
-
-                    b.Property<string>("Permiso")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int>("PermisoId")
-                        .HasColumnType("int");
 
                     b.Property<DateTime>("Salida")
                         .HasColumnType("datetime2");
@@ -89,10 +102,6 @@ namespace ModeloBD.Migrations
                         .HasColumnType("datetime2");
 
                     b.HasKey("Control_AsistenciaId");
-
-                    b.HasIndex("Horario_DetalleHorario_DetId");
-
-                    b.HasIndex("PermisoId");
 
                     b.ToTable("Control_Asistencias");
                 });
@@ -158,19 +167,19 @@ namespace ModeloBD.Migrations
                     b.Property<string>("Apellidos")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("AsistenciaId")
-                        .HasColumnType("int");
-
-                    b.Property<int?>("AsistenciasControl_AsistenciaId")
-                        .HasColumnType("int");
-
                     b.Property<int>("Cedula")
+                        .HasColumnType("int");
+
+                    b.Property<int>("Control_AsistenciaId")
                         .HasColumnType("int");
 
                     b.Property<int>("DepartamendoId")
                         .HasColumnType("int");
 
-                    b.Property<int?>("DepartamentosDepartamentoId")
+                    b.Property<int>("DesempenoEmId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("DesempenoScId")
                         .HasColumnType("int");
 
                     b.Property<string>("Direccion")
@@ -182,7 +191,7 @@ namespace ModeloBD.Migrations
                     b.Property<string>("Nombres")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("SucursalId")
+                    b.Property<int>("SueldoId")
                         .HasColumnType("int");
 
                     b.Property<int>("Telefono")
@@ -190,11 +199,15 @@ namespace ModeloBD.Migrations
 
                     b.HasKey("EmpleadoId");
 
-                    b.HasIndex("AsistenciasControl_AsistenciaId");
+                    b.HasIndex("Control_AsistenciaId");
 
-                    b.HasIndex("DepartamentosDepartamentoId");
+                    b.HasIndex("DepartamendoId");
 
-                    b.HasIndex("SucursalId");
+                    b.HasIndex("DesempenoEmId");
+
+                    b.HasIndex("DesempenoScId");
+
+                    b.HasIndex("SueldoId");
 
                     b.ToTable("Empleados");
                 });
@@ -218,7 +231,12 @@ namespace ModeloBD.Migrations
                     b.Property<DateTime>("Mes")
                         .HasColumnType("datetime2");
 
+                    b.Property<int>("SueldoId")
+                        .HasColumnType("int");
+
                     b.HasKey("FacturaId");
+
+                    b.HasIndex("SueldoId");
 
                     b.ToTable("Facturas");
                 });
@@ -245,7 +263,13 @@ namespace ModeloBD.Migrations
                     b.Property<DateTime>("Minuto")
                         .HasColumnType("datetime2");
 
+                    b.Property<int>("PermisoId")
+                        .HasColumnType("int");
+
                     b.HasKey("Horario_DetId");
+
+                    b.HasIndex("PermisoId")
+                        .IsUnique();
 
                     b.ToTable("Horario_Dets");
                 });
@@ -257,6 +281,12 @@ namespace ModeloBD.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
+                    b.Property<int>("Control_AsistenciaId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("Horario_DetId")
+                        .HasColumnType("int");
+
                     b.Property<string>("Nombre")
                         .HasColumnType("nvarchar(max)");
 
@@ -264,6 +294,8 @@ namespace ModeloBD.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("PermisoId");
+
+                    b.HasIndex("Control_AsistenciaId");
 
                     b.ToTable("Permisos");
                 });
@@ -278,10 +310,16 @@ namespace ModeloBD.Migrations
                     b.Property<string>("Direccion")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<int>("EmpleadoId")
+                        .HasColumnType("int");
+
                     b.Property<string>("Nombre")
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("SucursalId");
+
+                    b.HasIndex("EmpleadoId")
+                        .IsUnique();
 
                     b.ToTable("Sucursals");
                 });
@@ -293,21 +331,6 @@ namespace ModeloBD.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<int>("BonoId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("CargoId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("DesempenoEmId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("DesempenoScId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("EmpleadoId")
-                        .HasColumnType("int");
-
                     b.Property<int>("FacturasId")
                         .HasColumnType("int");
 
@@ -316,106 +339,179 @@ namespace ModeloBD.Migrations
 
                     b.HasKey("SueldoId");
 
-                    b.HasIndex("BonoId");
-
-                    b.HasIndex("CargoId");
-
-                    b.HasIndex("DesempenoEmId");
-
-                    b.HasIndex("DesempenoScId");
-
-                    b.HasIndex("EmpleadoId");
-
-                    b.HasIndex("FacturasId");
-
                     b.ToTable("Sueldos");
                 });
 
-            modelBuilder.Entity("Modelo.Entidades.Control_Asistencia", b =>
+            modelBuilder.Entity("Modelo.Entidades.Aumento", b =>
                 {
-                    b.HasOne("Modelo.Entidades.Horario_Det", "Horario_Detalle")
-                        .WithMany()
-                        .HasForeignKey("Horario_DetalleHorario_DetId");
-
-                    b.HasOne("Modelo.Entidades.Permiso", "Permisos")
-                        .WithMany()
-                        .HasForeignKey("PermisoId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Horario_Detalle");
-
-                    b.Navigation("Permisos");
-                });
-
-            modelBuilder.Entity("Modelo.Entidades.Empleado", b =>
-                {
-                    b.HasOne("Modelo.Entidades.Control_Asistencia", "Asistencias")
-                        .WithMany()
-                        .HasForeignKey("AsistenciasControl_AsistenciaId");
-
-                    b.HasOne("Modelo.Entidades.Departamento", "Departamentos")
-                        .WithMany()
-                        .HasForeignKey("DepartamentosDepartamentoId");
-
-                    b.HasOne("Modelo.Entidades.Sucursal", "Sucursales")
-                        .WithMany()
-                        .HasForeignKey("SucursalId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Asistencias");
-
-                    b.Navigation("Departamentos");
-
-                    b.Navigation("Sucursales");
-                });
-
-            modelBuilder.Entity("Modelo.Entidades.Sueldo", b =>
-                {
-                    b.HasOne("Modelo.Entidades.Bono", "Bonos")
-                        .WithMany()
+                    b.HasOne("Modelo.Entidades.Bono", "Bono")
+                        .WithMany("Aumentos")
                         .HasForeignKey("BonoId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("Modelo.Entidades.Cargo", "CargoS")
-                        .WithMany()
-                        .HasForeignKey("CargoId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                    b.HasOne("Modelo.Entidades.Empleado", "Empleado")
+                        .WithMany("Aumentos")
+                        .HasForeignKey("EmpleadoId")
+                        .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
-                    b.HasOne("Modelo.Entidades.DesempenoEm", "DesempenoEms")
-                        .WithMany()
-                        .HasForeignKey("DesempenoEmId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                    b.Navigation("Bono");
 
-                    b.HasOne("Modelo.Entidades.DesempenoSc", "desempenoScs")
-                        .WithMany()
-                        .HasForeignKey("DesempenoScId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                    b.Navigation("Empleado");
+                });
 
-                    b.HasOne("Modelo.Entidades.Empleado", "Empleados")
+            modelBuilder.Entity("Modelo.Entidades.Bono", b =>
+                {
+                    b.HasOne("Modelo.Entidades.Empleado", "Empleado")
                         .WithMany()
                         .HasForeignKey("EmpleadoId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("Modelo.Entidades.Factura", "Facturas")
-                        .WithMany()
-                        .HasForeignKey("FacturasId")
+                    b.Navigation("Empleado");
+                });
+
+            modelBuilder.Entity("Modelo.Entidades.Cargo", b =>
+                {
+                    b.HasOne("Modelo.Entidades.Sueldo", "Sueldo")
+                        .WithMany("Cargos")
+                        .HasForeignKey("SueldoId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.Navigation("Bonos");
+                    b.Navigation("Sueldo");
+                });
 
-                    b.Navigation("CargoS");
+            modelBuilder.Entity("Modelo.Entidades.Empleado", b =>
+                {
+                    b.HasOne("Modelo.Entidades.Control_Asistencia", "Control_Asistencia")
+                        .WithMany("Empleados")
+                        .HasForeignKey("Control_AsistenciaId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
-                    b.Navigation("DesempenoEms");
+                    b.HasOne("Modelo.Entidades.Departamento", "Departamento")
+                        .WithMany("Empleados")
+                        .HasForeignKey("DepartamendoId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
-                    b.Navigation("desempenoScs");
+                    b.HasOne("Modelo.Entidades.DesempenoEm", "DesempenoEm")
+                        .WithMany("Empleados")
+                        .HasForeignKey("DesempenoEmId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Modelo.Entidades.DesempenoSc", "DesempenoSc")
+                        .WithMany("Empleados")
+                        .HasForeignKey("DesempenoScId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Modelo.Entidades.Sueldo", "Sueldo")
+                        .WithMany("Empleados")
+                        .HasForeignKey("SueldoId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Control_Asistencia");
+
+                    b.Navigation("Departamento");
+
+                    b.Navigation("DesempenoEm");
+
+                    b.Navigation("DesempenoSc");
+
+                    b.Navigation("Sueldo");
+                });
+
+            modelBuilder.Entity("Modelo.Entidades.Factura", b =>
+                {
+                    b.HasOne("Modelo.Entidades.Sueldo", "Sueldo")
+                        .WithMany("Facturas")
+                        .HasForeignKey("SueldoId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Sueldo");
+                });
+
+            modelBuilder.Entity("Modelo.Entidades.Horario_Det", b =>
+                {
+                    b.HasOne("Modelo.Entidades.Permiso", "Permiso")
+                        .WithOne("Horario_Det")
+                        .HasForeignKey("Modelo.Entidades.Horario_Det", "PermisoId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Permiso");
+                });
+
+            modelBuilder.Entity("Modelo.Entidades.Permiso", b =>
+                {
+                    b.HasOne("Modelo.Entidades.Control_Asistencia", "Control_Asistencia")
+                        .WithMany("Permisos")
+                        .HasForeignKey("Control_AsistenciaId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Control_Asistencia");
+                });
+
+            modelBuilder.Entity("Modelo.Entidades.Sucursal", b =>
+                {
+                    b.HasOne("Modelo.Entidades.Empleado", "Empleado")
+                        .WithOne("Sucursal")
+                        .HasForeignKey("Modelo.Entidades.Sucursal", "EmpleadoId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Empleado");
+                });
+
+            modelBuilder.Entity("Modelo.Entidades.Bono", b =>
+                {
+                    b.Navigation("Aumentos");
+                });
+
+            modelBuilder.Entity("Modelo.Entidades.Control_Asistencia", b =>
+                {
+                    b.Navigation("Empleados");
+
+                    b.Navigation("Permisos");
+                });
+
+            modelBuilder.Entity("Modelo.Entidades.Departamento", b =>
+                {
+                    b.Navigation("Empleados");
+                });
+
+            modelBuilder.Entity("Modelo.Entidades.DesempenoEm", b =>
+                {
+                    b.Navigation("Empleados");
+                });
+
+            modelBuilder.Entity("Modelo.Entidades.DesempenoSc", b =>
+                {
+                    b.Navigation("Empleados");
+                });
+
+            modelBuilder.Entity("Modelo.Entidades.Empleado", b =>
+                {
+                    b.Navigation("Aumentos");
+
+                    b.Navigation("Sucursal");
+                });
+
+            modelBuilder.Entity("Modelo.Entidades.Permiso", b =>
+                {
+                    b.Navigation("Horario_Det");
+                });
+
+            modelBuilder.Entity("Modelo.Entidades.Sueldo", b =>
+                {
+                    b.Navigation("Cargos");
 
                     b.Navigation("Empleados");
 

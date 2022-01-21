@@ -14,7 +14,14 @@ namespace Modelo.Entidades
         public DateTime Dia { get; set; }
         public DateTime Hora { get; set; }
         public DateTime Minuto { get; set; }
-        public Control_Asistencia Control_Asistencia { get; set; }
+
+        public Permiso Permiso { get; set; }
+        public int PermisoId { get; set; }
+
+
+        //public ICollection<Permiso> Permisos { get; set; }
+        /*public Control_Asistencia Control_Asistencia { get; set; }
         public int Control_AsistenciaId { get; set; }
+        */
     }
 }

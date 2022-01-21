@@ -14,9 +14,9 @@ namespace Modelo.Entidades
         public DateTime SalidaAlmuerzo { get; set; }
         public DateTime EntradaAlmuerzo { get; set; }
         public DateTime Salida { get; set; }
-        public string Permiso { get; set; }
+        //public string Permiso { get; set; }
 
-        public Horario_Det Horario_Det{ get; set; }
+        //public Horario_Det Horario_Det{ get; set; }
        
         public ICollection<Permiso> Permisos  { get; set; }
 

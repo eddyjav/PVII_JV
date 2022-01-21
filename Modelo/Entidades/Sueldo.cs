@@ -23,7 +23,7 @@ namespace Modelo.Entidades
         public ICollection<Empleado> Empleados { get; set; }
         public ICollection<Factura> Facturas { get; set; }
         public ICollection<Cargo> Cargos { get; set; }
-        public ICollection<Bono> Bonos { get; set; }
+        //public ICollection<Bono> Bonos { get; set; }
 
     }
 }
