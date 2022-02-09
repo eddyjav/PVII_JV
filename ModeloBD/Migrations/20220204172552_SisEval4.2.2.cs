@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace ModeloBD.Migrations
 {
-    public partial class SisEval4 : Migration
+    public partial class SisEval422 : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -65,6 +65,20 @@ namespace ModeloBD.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "Sucursals",
+                columns: table => new
+                {
+                    SucursalId = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Nombre = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Direccion = table.Column<string>(type: "nvarchar(max)", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Sucursals", x => x.SucursalId);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "Sueldos",
                 columns: table => new
                 {
@@ -106,6 +120,7 @@ namespace ModeloBD.Migrations
                 {
                     CargoId = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
+                    Nombre = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Salario = table.Column<float>(type: "real", nullable: false),
                     SueldoId = table.Column<int>(type: "int", nullable: false)
                 },
@@ -133,6 +148,7 @@ namespace ModeloBD.Migrations
                     Telefono = table.Column<int>(type: "int", nullable: false),
                     Email = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     DepartamendoId = table.Column<int>(type: "int", nullable: false),
+                    SucursalId = table.Column<int>(type: "int", nullable: false),
                     Control_AsistenciaId = table.Column<int>(type: "int", nullable: false),
                     SueldoId = table.Column<int>(type: "int", nullable: false),
                     DesempenoEmId = table.Column<int>(type: "int", nullable: false),
@@ -166,6 +182,12 @@ namespace ModeloBD.Migrations
                         principalColumn: "DesempenoScId",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
+                        name: "FK_Empleados_Sucursals_SucursalId",
+                        column: x => x.SucursalId,
+                        principalTable: "Sucursals",
+                        principalColumn: "SucursalId",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
                         name: "FK_Empleados_Sueldos_SueldoId",
                         column: x => x.SueldoId,
                         principalTable: "Sueldos",
@@ -179,9 +201,7 @@ namespace ModeloBD.Migrations
                 {
                     FacturaId = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    Anio = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    Mes = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    Dia = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    Fecha = table.Column<DateTime>(type: "datetime2", nullable: false),
                     Importe = table.Column<float>(type: "real", nullable: false),
                     SueldoId = table.Column<int>(type: "int", nullable: false)
                 },
@@ -202,11 +222,7 @@ namespace ModeloBD.Migrations
                 {
                     Horario_DetId = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    Anio = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    Mes = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    Dia = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    Hora = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    Minuto = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    Fecha = table.Column<DateTime>(type: "datetime2", nullable: false),
                     PermisoId = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
@@ -227,7 +243,7 @@ namespace ModeloBD.Migrations
                     BonoId = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Nombre = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    Tipo = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Tipo = table.Column<int>(type: "int", nullable: false),
                     Valor = table.Column<float>(type: "real", nullable: false),
                     EmpleadoId = table.Column<int>(type: "int", nullable: false)
                 },
@@ -236,27 +252,6 @@ namespace ModeloBD.Migrations
                     table.PrimaryKey("PK_Bonos", x => x.BonoId);
                     table.ForeignKey(
                         name: "FK_Bonos_Empleados_EmpleadoId",
-                        column: x => x.EmpleadoId,
-                        principalTable: "Empleados",
-                        principalColumn: "EmpleadoId",
-                        onDelete: ReferentialAction.Cascade);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "Sucursals",
-                columns: table => new
-                {
-                    SucursalId = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    Nombre = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    Direccion = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    EmpleadoId = table.Column<int>(type: "int", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Sucursals", x => x.SucursalId);
-                    table.ForeignKey(
-                        name: "FK_Sucursals_Empleados_EmpleadoId",
                         column: x => x.EmpleadoId,
                         principalTable: "Empleados",
                         principalColumn: "EmpleadoId",
@@ -322,6 +317,11 @@ namespace ModeloBD.Migrations
                 column: "DesempenoScId");
 
             migrationBuilder.CreateIndex(
+                name: "IX_Empleados_SucursalId",
+                table: "Empleados",
+                column: "SucursalId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_Empleados_SueldoId",
                 table: "Empleados",
                 column: "SueldoId");
@@ -341,12 +341,6 @@ namespace ModeloBD.Migrations
                 name: "IX_Permisos_Control_AsistenciaId",
                 table: "Permisos",
                 column: "Control_AsistenciaId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Sucursals_EmpleadoId",
-                table: "Sucursals",
-                column: "EmpleadoId",
-                unique: true);
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
@@ -362,9 +356,6 @@ namespace ModeloBD.Migrations
 
             migrationBuilder.DropTable(
                 name: "Horario_Dets");
-
-            migrationBuilder.DropTable(
-                name: "Sucursals");
 
             migrationBuilder.DropTable(
                 name: "Bonos");
@@ -386,6 +377,9 @@ namespace ModeloBD.Migrations
 
             migrationBuilder.DropTable(
                 name: "DesempenoSc");
+
+            migrationBuilder.DropTable(
+                name: "Sucursals");
 
             migrationBuilder.DropTable(
                 name: "Sueldos");

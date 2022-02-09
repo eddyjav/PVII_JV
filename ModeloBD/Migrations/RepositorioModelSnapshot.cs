@@ -47,8 +47,8 @@ namespace ModeloBD.Migrations
                     b.Property<string>("Nombre")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("Tipo")
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<int>("Tipo")
+                        .HasColumnType("int");
 
                     b.Property<float>("Valor")
                         .HasColumnType("real");
@@ -66,6 +66,9 @@ namespace ModeloBD.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("Nombre")
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<float>("Salario")
                         .HasColumnType("real");
@@ -189,6 +192,9 @@ namespace ModeloBD.Migrations
                     b.Property<string>("Nombres")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<int>("SucursalId")
+                        .HasColumnType("int");
+
                     b.Property<int>("SueldoId")
                         .HasColumnType("int");
 
@@ -205,6 +211,8 @@ namespace ModeloBD.Migrations
 
                     b.HasIndex("DesempenoScId");
 
+                    b.HasIndex("SucursalId");
+
                     b.HasIndex("SueldoId");
 
                     b.ToTable("Empleados");
@@ -217,17 +225,11 @@ namespace ModeloBD.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<DateTime>("Anio")
-                        .HasColumnType("datetime2");
-
-                    b.Property<DateTime>("Dia")
+                    b.Property<DateTime>("Fecha")
                         .HasColumnType("datetime2");
 
                     b.Property<float>("Importe")
                         .HasColumnType("real");
-
-                    b.Property<DateTime>("Mes")
-                        .HasColumnType("datetime2");
 
                     b.Property<int>("SueldoId")
                         .HasColumnType("int");
@@ -246,19 +248,7 @@ namespace ModeloBD.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<DateTime>("Anio")
-                        .HasColumnType("datetime2");
-
-                    b.Property<DateTime>("Dia")
-                        .HasColumnType("datetime2");
-
-                    b.Property<DateTime>("Hora")
-                        .HasColumnType("datetime2");
-
-                    b.Property<DateTime>("Mes")
-                        .HasColumnType("datetime2");
-
-                    b.Property<DateTime>("Minuto")
+                    b.Property<DateTime>("Fecha")
                         .HasColumnType("datetime2");
 
                     b.Property<int>("PermisoId")
@@ -308,16 +298,10 @@ namespace ModeloBD.Migrations
                     b.Property<string>("Direccion")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("EmpleadoId")
-                        .HasColumnType("int");
-
                     b.Property<string>("Nombre")
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("SucursalId");
-
-                    b.HasIndex("EmpleadoId")
-                        .IsUnique();
 
                     b.ToTable("Sucursals");
                 });
@@ -407,6 +391,12 @@ namespace ModeloBD.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
+                    b.HasOne("Modelo.Entidades.Sucursal", "Sucursal")
+                        .WithMany("Empleados")
+                        .HasForeignKey("SucursalId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
                     b.HasOne("Modelo.Entidades.Sueldo", "Sueldo")
                         .WithMany("Empleados")
                         .HasForeignKey("SueldoId")
@@ -420,6 +410,8 @@ namespace ModeloBD.Migrations
                     b.Navigation("DesempenoEm");
 
                     b.Navigation("DesempenoSc");
+
+                    b.Navigation("Sucursal");
 
                     b.Navigation("Sueldo");
                 });
@@ -457,17 +449,6 @@ namespace ModeloBD.Migrations
                     b.Navigation("Control_Asistencia");
                 });
 
-            modelBuilder.Entity("Modelo.Entidades.Sucursal", b =>
-                {
-                    b.HasOne("Modelo.Entidades.Empleado", "Empleado")
-                        .WithOne("Sucursal")
-                        .HasForeignKey("Modelo.Entidades.Sucursal", "EmpleadoId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Empleado");
-                });
-
             modelBuilder.Entity("Modelo.Entidades.Bono", b =>
                 {
                     b.Navigation("Aumentos");
@@ -498,13 +479,16 @@ namespace ModeloBD.Migrations
             modelBuilder.Entity("Modelo.Entidades.Empleado", b =>
                 {
                     b.Navigation("Aumentos");
-
-                    b.Navigation("Sucursal");
                 });
 
             modelBuilder.Entity("Modelo.Entidades.Permiso", b =>
                 {
                     b.Navigation("Horario_Det");
+                });
+
+            modelBuilder.Entity("Modelo.Entidades.Sucursal", b =>
+                {
+                    b.Navigation("Empleados");
                 });
 
             modelBuilder.Entity("Modelo.Entidades.Sueldo", b =>

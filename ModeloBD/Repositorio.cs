@@ -8,8 +8,26 @@ using System.Threading.Tasks;
 
 namespace ModeloBD
 {
+
     public class Repositorio : DbContext
     {
+        public Repositorio()
+        {
+
+        }
+
+        //public Repositorio(DbContextOptions<Repositorio> options)
+        public Repositorio(DbContextOptions options)
+            : base(options)
+        {
+        
+        }
+
+        public void PreparaDB()
+        {
+            Database.EnsureDeleted();
+            Database.EnsureCreated();
+        }
         public DbSet<Bono> Bonos { get; set; }
         public DbSet <Cargo> Cargos { get; set; }
         public DbSet<Control_Asistencia> Control_Asistencias { get; set; }
@@ -25,11 +43,17 @@ namespace ModeloBD
 
         public DbSet<Aumento> Aumentos { get; set; }
 
-        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+
+        protected override void OnConfiguring(DbContextOptionsBuilder options)
         {
-            optionsBuilder.UseSqlServer("Server=DESKTOP-V7VPQBI;Initial Catalog=SisEvalV4;Trusted_Connection=True");
+            if (!options.IsConfigured)
+            {
+                options.UseSqlServer("Server=DESKTOP-V7VPQBI;Initial Catalog=SisEvalV4_2;Trusted_Connection=True");
+            }
+                
         }
-        
+
+
         protected override void OnModelCreating(ModelBuilder model)
         {
             //Empleado
@@ -58,11 +82,11 @@ namespace ModeloBD
                 .WithMany(ca => ca.Empleados)
                 .HasForeignKey(e => e.Control_AsistenciaId);
             
-            //EMPLEADO ONEbyONE
+            //EM
             model.Entity<Empleado>()
                 .HasOne(e => e.Sucursal)
-                .WithOne(s => s.Empleado)
-                .HasForeignKey<Sucursal>(s => s.EmpleadoId);
+                .WithMany(s => s.Empleados)
+                .HasForeignKey(e => e.SucursalId);
 
             //Sueldo
             //Factura

@@ -19,7 +19,7 @@ namespace Modelo.Entidades
         public Departamento Departamento { get; set; }
         public int DepartamendoId { get; set; }
         public Sucursal Sucursal { get; set; }
-        //public int SucursalId { get; set; }
+        public int SucursalId { get; set; }
         public Control_Asistencia Control_Asistencia { get; set; }
         public int Control_AsistenciaId { get; set; }
 

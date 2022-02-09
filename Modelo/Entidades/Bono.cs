@@ -7,11 +7,14 @@ using System.Threading.Tasks;
 
 namespace Modelo.Entidades
 {
+    public enum BonoTipo { Empleado, Sucursal, Extra}
     public class Bono
     {
         public int BonoId { get; set; }
         public string Nombre { get; set; }
-        public string Tipo { get; set; }
+
+        public BonoTipo Tipo { get; set; }
+        //public string Tipo { get; set; }
         public float Valor { get; set; }
 
         /*public Sueldo Sueldo { get; set; }

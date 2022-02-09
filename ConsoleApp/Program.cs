@@ -1,7 +1,10 @@
-﻿using Modelo.Entidades;
+﻿using Microsoft.EntityFrameworkCore;
+using Modelo.Entidades;
+using Modelo.Operaciones;
 using ModeloBD;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace ConsoleApp
 {
@@ -10,7 +13,98 @@ namespace ConsoleApp
         static void Main(string[] args)
         {
             Console.WriteLine("Hello World!");
+            
+            Grabar grabar = new Grabar();
+            grabar.DatosIni();
+            
+            using (var db = EvaluacionBuilder.Crear())
+            {
+                /*
+                var facturas = db.Facturas.FirstOrDefault();
+                var cargoS = db.Cargos.FirstOrDefault();
+                */
+                var f = db.Facturas
+                .Include(fac => fac.Sueldo)
+                .Single(fac => fac.SueldoId == 1)
+                ;
+
+                var c = db.Cargos
+                    .Include(carg => carg.Sueldo)
+                    .Single(carg => carg.SueldoId == 1)
+                    ;
+                var s = db.Sueldos
+                    .Single(s => s.SueldoId == 1)
+                    ;
+
+                var calS = new CalculoSueldos(c, f);
+                var sueldo = calS.Sueldo(s);
+
+                Console.WriteLine(calS.Sueldo(s));
+
+                calS.Aprobado(f);
+
+                //verificar si es acreedor al bono de Empleado
+                Console.WriteLine(calS.Aprobado(f));
+
+                if (calS.Aprobado(f))
+                {
+                    sueldo = sueldo + 150;
+                }
+                else
+                {
+                    sueldo = sueldo - 1000;
+                }
+
+                Console.WriteLine(sueldo);
+            }
+
+            /*
+                using ( Repositorio db = new Repositorio())
+            {
+                var facturas = db.Facturas.FirstOrDefault();
+                var cargoS = db.Cargos.FirstOrDefault();
+
+                var f = db.Facturas
+                .Include(fac => fac.Sueldo)
+                .Single(fac => fac.SueldoId == 1)
+                ;
+
+                var c = db.Cargos
+                    .Include(carg => carg.Sueldo)
+                    .Single(carg => carg.SueldoId == 1)
+                    ;
+                var s = db.Sueldos
+                    .Single(s => s.SueldoId == 1)
+                    ;
+
+                var calS = new CalculoSueldos(c, f);
+                var sueldo = calS.Sueldo(s);
+
+                Console.WriteLine(calS.Sueldo(s));
+
+                calS.Aprobado(f);
+
+                //verificar si es acreedor al bono de Empleado
+                Console.WriteLine(calS.Aprobado(f));
+
+                if (calS.Aprobado(f))
+                {
+                    sueldo = sueldo + 150;
+                }
+                else
+                {
+                    sueldo = sueldo - 1000;
+                }
+
+                Console.WriteLine(sueldo);
+
+            }
+            */
+            
+
             //Creacion de Departamentos
+
+            /*
             Departamento Ventas = new Departamento()
             {
                 Nombre = "Ventas"
@@ -98,13 +192,14 @@ namespace ConsoleApp
             //Ventas.ListaEmDep = new List<Empleado>() { Juan, Andres};
 
 
-            Repositorio db = new Repositorio();
+            //Repositorio db = new Repositorio();
             //db.Departamentos.Add(Ventas);
             //db.Sucursals.Add(Sucursal1);
             //db.Sucursals.Add(Sucursal2);
-            db.Empleados.Add(Juan);
+           // db.Empleados.Add(Juan);
             //db.Empleados.Add(Andres);
-            db.SaveChanges();
+           // db.SaveChanges();
+            
         }
     }
 }

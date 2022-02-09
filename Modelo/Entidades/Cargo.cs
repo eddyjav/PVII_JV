@@ -10,6 +10,7 @@ namespace Modelo.Entidades
     public class Cargo
     {
         public int CargoId { get; set; }
+        public string Nombre { get; set; }
         public float Salario { get; set; }
         public Sueldo Sueldo { get; set; }
         public int SueldoId { get; set; }
